@@ -31,6 +31,22 @@ struct MimeTypeParameters {
     var parameters = [String: String]()
 }
 
+enum CustomColumnsOPDS {
+    static let troubleWords = "Trouble Words"
+    static let lexileScore = "Lexile Score"
+    static let startChapter = "Start"
+}
+public enum CustomColumnsSwift {
+    public static let troubleWords = "troubleWords"
+    public static let lexileScore = "lexileScore"
+    public static let startChapter = "startChapter"
+}
+public enum CustomColumnsFirebase {
+    public static let troubleWords = "trouble_words"
+    public static let lexileScore = "lexile_score"
+    public static let startChapter = "reading_chapter_start"
+}
+
 public class OPDS1Parser: Loggable {
     static var feedURL: URL?
     
@@ -327,6 +343,15 @@ public class OPDS1Parser: Loggable {
                 code: category.attributes["term"]
             )
         }
+        
+        
+        // Custom columns
+        var customColumns: [String: String] = [:]
+        for customColumn in entry.children(tag: "customcolumn") {
+            if let value = customColumn.attr("value"), let title = customColumn.attr("title") {
+                customColumns.updateValue(value, forKey: title)
+            }
+        }
 
         let metadata = Metadata(
             identifier: tag("identifier") ?? tag("id"),
@@ -340,6 +365,9 @@ public class OPDS1Parser: Loggable {
             description: tag("content") ?? tag("summary"),
             otherMetadata: [
                 "rights": tags("rights").joined(separator: " "),
+                CustomColumnsSwift.troubleWords: customColumns[CustomColumnsOPDS.troubleWords] ?? 0,
+                CustomColumnsSwift.lexileScore: customColumns[CustomColumnsOPDS.lexileScore] ?? 0,
+                CustomColumnsSwift.startChapter: customColumns[CustomColumnsOPDS.startChapter] ?? ""
             ]
         )
 
