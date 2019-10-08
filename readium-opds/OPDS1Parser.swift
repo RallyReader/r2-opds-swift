@@ -120,6 +120,12 @@ public class OPDS1Parser: Loggable {
             throw OPDS1ParserError.missingTitle
         }
         let feed = Feed.init(title: title)
+        
+        if let id = root.firstChild(tag: "id")?.stringValue,
+            id.contains("dashboard")
+        {
+            feed.groupedFeed = true
+        }
 
         if let tmpDate = root.firstChild(tag: "updated")?.stringValue,
             let date = tmpDate.dateFromISO8601
@@ -177,6 +183,10 @@ public class OPDS1Parser: Loggable {
                     title: entry.firstChild(tag: "title")?.stringValue,
                     rel: link.attr("rel")
                 )
+                
+                if let group = entry.firstChild(tag: "group")?.stringValue {
+                    newLink.group = group
+                }
 
                 if let facetElementCountStr = link.attr("count"),
                     let facetElementCount = Int(facetElementCountStr) {
@@ -344,7 +354,6 @@ public class OPDS1Parser: Loggable {
             )
         }
         
-        
         // Custom columns
         var customColumns: [String: String] = [:]
         for customColumn in entry.children(tag: "customcolumn") {
@@ -400,13 +409,19 @@ public class OPDS1Parser: Loggable {
             }
         }
 
-        return Publication(
+        let newPublication = Publication(
             metadata: metadata,
             links: links,
             otherCollections: [
                 PublicationCollection(role: "images", links: images)
             ]
         )
+        
+        if let group = entry.firstChild(tag: "group")?.stringValue {
+            newPublication.group = group
+        }
+        
+        return newPublication
     }
 
     static func addFacet(feed: Feed, to link: Link, named title: String) {
