@@ -46,6 +46,12 @@ public enum CustomColumnsFirebase {
     public static let lexileScore = "lexile_score"
     public static let startChapter = "reading_chapter_start"
 }
+public enum OPDSGroupName {
+    public static let tags = "Tags"
+    public static let popular = "Popular"
+    public static let recents = "Recents"
+    public static let authors = "Authors"
+}
 
 public class OPDS1Parser: Loggable {
     static var feedURL: URL?
