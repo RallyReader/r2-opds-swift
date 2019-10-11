@@ -34,7 +34,7 @@ struct MimeTypeParameters {
 enum CustomColumnsOPDS {
     static let troubleWords = "Trouble Words"
     static let lexileScore = "Lexile Score"
-    static let startChapter = "Start"
+    static let startChapter = "Start Chapter"
 }
 public enum CustomColumnsSwift {
     public static let troubleWords = "troubleWords"
