@@ -202,11 +202,16 @@ public class OPDS1Parser: Loggable {
                     newLink.properties.numberOfItems = facetElementCount
                 }
                 
-                if entry.firstChild(tag: "group")?.stringValue == OPDSGroupName.authors.uppercased(),
-                    let numberOfBooks = entry.firstChild(tag: "content")?.stringValue {
-                    var justNumber = numberOfBooks.replacingOccurrences(of: " books", with: "")
-                    justNumber = justNumber.replacingOccurrences(of: " book", with: "")
-                    newLink.properties.numberOfItems = Int(justNumber)
+                if entry.firstChild(tag: "group")?.stringValue == OPDSGroupName.authors.uppercased() {
+                    if let numberOfBooks = entry.firstChild(tag: "content")?.stringValue {
+                        var justNumber = numberOfBooks.replacingOccurrences(of: " books", with: "")
+                        justNumber = justNumber.replacingOccurrences(of: " book", with: "")
+                        newLink.properties.numberOfItems = Int(justNumber)
+                    }
+                    if let image = entry.firstChild(tag: "image")?.stringValue {
+                        print(image)
+                        newLink.mediaOverlays.append(MediaOverlayNode(image))
+                    }
                 }
                 
                 // Check collection link
