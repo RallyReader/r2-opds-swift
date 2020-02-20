@@ -7,7 +7,7 @@ Pod::Spec.new do |s|
   s.license      = "BSD 3-Clause License"
   s.author       = { "Aferdita Muriqi" => "aferdita.muriqi@gmail.com" }
   s.platform     = :ios
-  s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "10.0"
   s.source       = { :git => "https://github.com/readium/r2-opds-swift.git", :branch => "develop" }
   s.source_files  = "readium-opds/**/*.{m,h,swift}"
   s.exclude_files = ["**/Info*.plist","**/Carthage/*"]
