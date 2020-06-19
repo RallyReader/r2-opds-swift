@@ -36,18 +36,21 @@ enum CustomColumnsOPDS {
     static let lexileScore = "Lexile Score"
     static let startChapter = "Start Chapter"
     public static let coverColor = "Cover Color"
+    static let rating = "Rating"
 }
 public enum CustomColumnsSwift {
     public static let troubleWords = "troubleWords"
     public static let lexileScore = "lexileScore"
     public static let startChapter = "startChapter"
     public static let coverColor = "coverColor"
+    public static let rating = "rating"
 }
 public enum CustomColumnsFirebase {
     public static let troubleWords = "trouble_words"
     public static let lexileScore = "lexile_score"
     public static let startChapter = "reading_chapter_start"
     public static let coverColor = "cover_color"
+    public static let rating = "rating"
 }
 public enum OPDSGroupName {
     public static let tags = "Tags"
@@ -395,10 +398,11 @@ public class OPDS1Parser: Loggable {
             description: tag("content") ?? tag("summary"),
             otherMetadata: [
                 "rights": tags("rights").joined(separator: " "),
-                CustomColumnsSwift.troubleWords: customColumns[CustomColumnsOPDS.troubleWords] ?? 0,
-                CustomColumnsSwift.lexileScore: customColumns[CustomColumnsOPDS.lexileScore] ?? 0,
+                CustomColumnsSwift.troubleWords: entry.children(tag: "troubleWords", inNamespace: "rr").first?.numberValue ?? 0,
+                CustomColumnsSwift.lexileScore: entry.children(tag: "lexileScore", inNamespace: "rr").first?.stringValue ?? 0,
                 CustomColumnsSwift.startChapter: customColumns[CustomColumnsOPDS.startChapter] ?? "",
-                CustomColumnsSwift.coverColor: customColumns[CustomColumnsOPDS.coverColor] ?? ""
+                CustomColumnsSwift.coverColor: customColumns[CustomColumnsOPDS.coverColor] ?? "",
+                CustomColumnsSwift.rating: entry.children(tag: "rating", inNamespace: "rr").first?.numberValue ?? Double(0)
             ]
         )
 
