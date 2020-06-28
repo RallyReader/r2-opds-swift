@@ -37,6 +37,7 @@ enum CustomColumnsOPDS {
     static let startChapter = "Start Chapter"
     public static let coverColor = "Cover Color"
     static let rating = "Rating"
+    static let isbn = "ISBN"
 }
 public enum CustomColumnsSwift {
     public static let troubleWords = "troubleWords"
@@ -44,6 +45,7 @@ public enum CustomColumnsSwift {
     public static let startChapter = "startChapter"
     public static let coverColor = "coverColor"
     public static let rating = "rating"
+    public static let isbn = "isbn"
 }
 public enum CustomColumnsFirebase {
     public static let troubleWords = "trouble_words"
@@ -51,6 +53,7 @@ public enum CustomColumnsFirebase {
     public static let startChapter = "reading_chapter_start"
     public static let coverColor = "cover_color"
     public static let rating = "rating"
+    public static let isbn = "ISBN"
 }
 public enum OPDSGroupName {
     public static let tags = "Tags"
